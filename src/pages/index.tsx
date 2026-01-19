@@ -1,20 +1,8 @@
 'use client'
 import Button from '@mui/material/Button'
-import axios from 'axios'
 import Head from 'next/head'
-import { useEffect } from 'react'
 
 export default function Home() {
-  const fetchData = async () => {
-    await axios.get('http://localhost:3001/api/users').then(res => {
-      console.log('data')
-    })
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
   return (
     <>
       <Head>
