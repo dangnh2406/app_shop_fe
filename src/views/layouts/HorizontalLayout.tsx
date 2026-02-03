@@ -10,7 +10,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { IconButton } from '@mui/material'
+import { Badge, IconButton } from '@mui/material'
 
 // component
 import IconifyIcon from 'src/components/Icon'
@@ -58,7 +58,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           margin: '0 20px'
         }}
       >
-        {!isHideMenu && (
+        {isHideMenu && (
           <IconButton
             edge='start'
             color='inherit'
@@ -79,11 +79,11 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
         </Typography>
         <UserDropDown />
 
-        {/* <IconButton color='inherit'>
+        <IconButton color='inherit'>
           <Badge badgeContent={4} color='primary'>
             <IconifyIcon icon='iconamoon:notification-light' />
           </Badge>
-        </IconButton> */}
+        </IconButton>
       </Toolbar>
     </AppBar>
   )

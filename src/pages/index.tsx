@@ -1,7 +1,9 @@
 'use client'
 import { Box } from '@mui/material'
 import Head from 'next/head'
+import { ReactNode } from 'react'
 import CustomTextField from 'src/components/text-field'
+import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
 
 export default function Home() {
   return (
@@ -12,9 +14,8 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Box sx={{ margin: 6, width: '300px' }}>
-        <CustomTextField label='Custom Text Field' />
-      </Box>
     </>
   )
 }
+
+Home.getLayout = (page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>

@@ -94,7 +94,9 @@ const UserDropDown = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>{/* {user?.email} {user?.middleName} {user?.lastName} */}</MenuItem>
+        <MenuItem onClick={handleClose}>
+          {user?.email} {user?.middleName} {user?.lastName}
+        </MenuItem>
         <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>

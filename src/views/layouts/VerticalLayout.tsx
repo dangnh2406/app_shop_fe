@@ -8,13 +8,13 @@ import Divider from '@mui/material/Divider'
 import IconButton from '@mui/material/IconButton'
 
 // layout
-import ListVerticalLayout from './ListVerticalLayout'
 
 // next
 import { NextPage } from 'next'
 
 // component
 import IconifyIcon from 'src/components/Icon'
+import ListVerticalLayout from './ListVerticalLayout'
 
 const drawerWidth: number = 240
 
