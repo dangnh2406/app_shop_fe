@@ -8,24 +8,22 @@ import {
   CssBaseline,
   FormControlLabel,
   Grid,
-  InputAdornment,
   IconButton,
+  InputAdornment,
   Typography,
   useTheme
 } from '@mui/material'
 import { NextPage } from 'next'
-import { useContext, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import CustomTextField from 'src/components/text-field'
 import { EMAIL_REG, PASSWORD_REG } from 'src/configs/regex'
+import { useAuth } from 'src/hooks/useAuth'
 import * as yup from 'yup'
-import { MdVisibility, MdOutlineVisibilityOff } from 'react-icons/md'
 import LoginDark from '/public/images/login-dark.png'
 import LoginLight from '/public/images/login-light.png'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useAuth } from 'src/hooks/useAuth'
-import { log } from 'console'
 
 type TProps = {}
 
@@ -153,7 +151,7 @@ const LoginPage: NextPage<TProps> = () => {
                             aria-label='toggle password visibility'
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                            {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />}
+                            {/* {showPassword ? <MdVisibility /> : <MdOutlineVisibilityOff />} */}
                           </IconButton>
                         </InputAdornment>
                       )
