@@ -5,7 +5,7 @@ import { Skin } from 'src/types/layouts'
 const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
   // ** Vars
   const whiteColor = '#FFF'
-  const lightColor = '47, 43, 61'
+  const lightColor = '#941010'
   const darkColor = '208, 212, 241'
   const darkPaperBgColor = '#2F3349'
   const mainColor = mode === 'light' ? lightColor : darkColor

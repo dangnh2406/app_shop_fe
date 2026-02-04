@@ -36,6 +36,7 @@ import AclGuard from 'src/components/auth/AclGuard'
 import ReactHotToast from 'src/components/react-hot-toast'
 import { useSettings } from 'src/hooks/useSettings'
 import ThemeComponent from 'src/theme/ThemeComponent'
+import UserLayout from 'src/views/layouts/UserLayout'
 
 type ExtendedAppProps = AppProps & {
   Component: NextPage
@@ -48,17 +49,17 @@ type GuardProps = {
 }
 
 // ** Pace Loader
-if (themeConfig.routingLoader) {
-  Router.events.on('routeChangeStart', () => {
-    NProgress.start()
-  })
-  Router.events.on('routeChangeError', () => {
-    NProgress.done()
-  })
-  Router.events.on('routeChangeComplete', () => {
-    NProgress.done()
-  })
-}
+// if (themeConfig.routingLoader) {
+//   Router.events.on('routeChangeStart', () => {
+//     NProgress.start()
+//   })
+//   Router.events.on('routeChangeError', () => {
+//     NProgress.done()
+//   })
+//   Router.events.on('routeChangeComplete', () => {
+//     NProgress.done()
+//   })
+// }
 
 const Guard = ({ children, authGuard, guestGuard }: GuardProps) => {
   if (guestGuard) {
@@ -77,7 +78,7 @@ export default function App(props: ExtendedAppProps) {
   const { settings } = useSettings()
 
   // Variables
-  const getLayout = Component.getLayout ?? (page => <>{page}</>)
+  const getLayout = Component.getLayout ?? (page => <UserLayout>{page}</UserLayout>)
 
   const setConfig = Component.setConfig ?? undefined
 

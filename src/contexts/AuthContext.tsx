@@ -1,5 +1,5 @@
 // ** React Imports
-import { createContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 // ** Next Import
 import { useRouter } from 'next/router'
@@ -11,7 +11,10 @@ import axios from 'axios'
 import authConfig from 'src/configs/auth'
 
 // ** Types
-import { AuthValuesType, LoginParams, ErrCallbackType, UserDataType } from './types'
+import { CONFIG_API } from 'src/configs/api'
+import { clearLocalUserData, setLocalUserData } from 'src/helpers/storage'
+import { loginAuth } from 'src/services/auth'
+import { AuthValuesType, ErrCallbackType, LoginParams, UserDataType } from './types'
 
 // ** Defaults
 const defaultProvider: AuthValuesType = {
@@ -43,22 +46,20 @@ const AuthProvider = ({ children }: Props) => {
       if (storedToken) {
         setLoading(true)
         await axios
-          .get(authConfig.meEndpoint, {
+          .get(CONFIG_API.AUTH.AUTH_ME, {
             headers: {
-              Authorization: storedToken
+              Authorization: `Bearer ${storedToken}`
             }
           })
           .then(async response => {
             setLoading(false)
-            setUser({ ...response.data.userData })
+            setUser({ ...response.data.data })
           })
           .catch(() => {
-            localStorage.removeItem('userData')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('accessToken')
+            clearLocalUserData()
             setUser(null)
             setLoading(false)
-            if (authConfig.onTokenExpiration === 'logout' && !router.pathname.includes('login')) {
+            if (!router.pathname.includes('login')) {
               router.replace('/login')
             }
           })
@@ -68,21 +69,22 @@ const AuthProvider = ({ children }: Props) => {
     }
 
     initAuth()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleLogin = (params: LoginParams, errorCallback?: ErrCallbackType) => {
-    axios
-      .post(authConfig.loginEndpoint, params)
+    loginAuth({ email: params.email, password: params.password })
       .then(async response => {
         params.rememberMe
-          ? window.localStorage.setItem(authConfig.storageTokenKeyName, response.data.accessToken)
+          ? setLocalUserData(
+              JSON.stringify(response.data.data),
+              response.data.access_token,
+              response.data.refresh_token
+            )
           : null
         const returnUrl = router.query.returnUrl
+        console.log('res', { response })
 
-        setUser({ ...response.data.userData })
-        params.rememberMe ? window.localStorage.setItem('userData', JSON.stringify(response.data.userData)) : null
-
+        setUser({ ...response.data.user })
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
 
         router.replace(redirectURL as string)
@@ -95,8 +97,7 @@ const AuthProvider = ({ children }: Props) => {
 
   const handleLogout = () => {
     setUser(null)
-    window.localStorage.removeItem('userData')
-    window.localStorage.removeItem(authConfig.storageTokenKeyName)
+    clearLocalUserData()
     router.push('/login')
   }
 
